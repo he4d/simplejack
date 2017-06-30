@@ -2,7 +2,19 @@ package he4dlog
 
 import (
 	"io"
+	"io/ioutil"
 	"log"
+)
+
+type LogLevel uint8
+
+const (
+	TRACE LogLevel = iota
+	DEBUG
+	INFO
+	WARNING
+	ERROR
+	FATAL
 )
 
 //Logger contains all Loggers for the various log levels
@@ -15,20 +27,43 @@ type Logger struct {
 	Fatal   *log.Logger
 }
 
-//NewSingleWriter creates a new Logger with one single output and returns it
-func NewSingleWriter(writer io.Writer) *Logger {
-	return NewMultiWriter(writer, writer, writer, writer, writer, writer)
-}
-
-//NewMultiWriter creates a new Logger with multiple outputs and returns it
-func NewMultiWriter(
-	traceHandle io.Writer,
-	debugHandle io.Writer,
-	infoHandle io.Writer,
-	warningHandle io.Writer,
-	errorHandle io.Writer,
-	fatalHandle io.Writer) *Logger {
-
+//New creates a new Logger with one single output and returns it
+func New(minLogLevel LogLevel, writer io.Writer) *Logger {
+	traceHandle := ioutil.Discard
+	debugHandle := ioutil.Discard
+	infoHandle := ioutil.Discard
+	warningHandle := ioutil.Discard
+	errorHandle := ioutil.Discard
+	fatalHandle := ioutil.Discard
+	switch minLogLevel {
+	case TRACE:
+		traceHandle = writer
+		debugHandle = writer
+		infoHandle = writer
+		warningHandle = writer
+		errorHandle = writer
+		fatalHandle = writer
+	case DEBUG:
+		debugHandle = writer
+		infoHandle = writer
+		warningHandle = writer
+		errorHandle = writer
+		fatalHandle = writer
+	case INFO:
+		infoHandle = writer
+		warningHandle = writer
+		errorHandle = writer
+		fatalHandle = writer
+	case WARNING:
+		warningHandle = writer
+		errorHandle = writer
+		fatalHandle = writer
+	case ERROR:
+		errorHandle = writer
+		fatalHandle = writer
+	case FATAL:
+		fatalHandle = writer
+	}
 	trace := log.New(traceHandle,
 		"TRACE: ",
 		log.Ldate|log.Ltime|log.Lshortfile)
