@@ -1,4 +1,4 @@
-package he4dlog
+package simplejack
 
 import (
 	"testing"

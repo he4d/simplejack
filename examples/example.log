@@ -1,0 +1,1 @@
+FATAL: 2017/07/01 09:33:06 example_file.go:18: This will write to the file example.log and os.Exit(1)

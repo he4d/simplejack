@@ -1,4 +1,4 @@
-package he4dlog
+package simplejack
 
 import (
 	"io"
@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+//LogLevel is the type for the LogLevels
 type LogLevel uint8
 
 const (
@@ -17,7 +18,7 @@ const (
 	FATAL
 )
 
-//Logger contains all Loggers for the various log levels
+//Logger contains all loggers for the various log levels
 type Logger struct {
 	Trace   *log.Logger
 	Debug   *log.Logger
@@ -27,7 +28,9 @@ type Logger struct {
 	Fatal   *log.Logger
 }
 
-//New creates a new Logger with one single output and returns it
+//New creates a new Logger with and returns it.
+//It is necessary to pass a minimum loglevel and a writer to where
+//the log should be written to
 func New(minLogLevel LogLevel, writer io.Writer) *Logger {
 	traceHandle := ioutil.Discard
 	debugHandle := ioutil.Discard
