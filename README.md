@@ -3,10 +3,9 @@ simplejack - a simple level based logger for golang
 
 ![alt text](https://pbs.twimg.com/media/CNb26N1UAAAAHTw.jpg "Simple Jack")
 
-Simply pass the minimum loglevel and a io.Writer where to write to.. simple as that!
-
-### Example message:
-+ LOGLEVEL: 2017/07/01 12:00:00 example.go:18: Example logmessage..
+Usage
+-----
+Pass the minimum loglevel and an io.Writer where the logger will write to.. simple as that!
 
 ### Loglevels:
 + TRACE
@@ -15,6 +14,9 @@ Simply pass the minimum loglevel and a io.Writer where to write to.. simple as t
 + WARNING
 + ERROR
 + FATAL
+
+### Example message:
++ LOGLEVEL: 2017/07/01 12:00:00 example.go:18: Example logmessage..
 
 Usage examples:
 --------------
@@ -33,7 +35,7 @@ import (
 func main() {
 	logger := simplejack.New(simplejack.WARNING, os.Stdout)
 	logger.Trace.Print("This will land in nirvana")
-	logger.Warning.Print("This will print out to stdout")
+	logger.Warning.Print("This will print to stdout")
 }
 ```
 
@@ -57,7 +59,7 @@ func main() {
 
 	logger := simplejack.New(simplejack.DEBUG, file)
 	logger.Trace.Print("This will land in nirvana")
-	logger.Fatal.Fatalf("This will write to the file example.log and os.Exit(1)")
+	logger.Fatal.Fatal("This will write to the file example.log and os.Exit(1)")
 }
 ```
 

@@ -67,29 +67,32 @@ func New(minLogLevel LogLevel, writer io.Writer) *Logger {
 	case FATAL:
 		fatalHandle = writer
 	}
+
+	loggingProps := log.Ldate | log.Ltime | log.Lshortfile
+
 	trace := log.New(traceHandle,
 		"TRACE: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	debug := log.New(debugHandle,
 		"DEBUG: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	info := log.New(infoHandle,
 		"INFO: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	warning := log.New(warningHandle,
 		"WARNING: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	errlog := log.New(errorHandle,
 		"ERROR: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	fatal := log.New(fatalHandle,
 		"FATAL: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		loggingProps)
 
 	logger := &Logger{
 		Trace:   trace,
