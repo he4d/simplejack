@@ -79,7 +79,7 @@ func New(minLogLevel LogLevel, writer io.Writer) *Logger {
 		loggingProps)
 
 	info := log.New(infoHandle,
-		"INFO: ",
+		"INFO2: ",
 		loggingProps)
 
 	warning := log.New(warningHandle,
